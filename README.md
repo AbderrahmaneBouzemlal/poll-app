@@ -6,11 +6,11 @@ A simple polling app front-end built with **Svelte 5** (no SvelteKit), **Vite**,
 ## Features
 
 - ⚡️ Built with [Svelte 5](https://svelte.dev/blog/svelte-5-beta) and [Vite](https://vitejs.dev/)
-- 🎨 Styled with [Tailwind CSS v3](https://tailwindcss.com/) (dark mode supported)
+- 🎨 Styled with [Tailwind CSS v4](https://tailwindcss.com/) (dark mode supported)
 - 🗳️ Polling: Vote for your favorite option and see live results
 - 🌗 Light/Dark theme toggle
-- 🏪 Svelte 5 stores: `writable`, `readable`, `derived`, and `$state` rune
-- 🔄 Animations & transitions: `fade`, `fly`, `slide`, and `animate:flip`
+- 🏪 Svelte 5 stores: `writable`, `derived`, and `$state` rune
+- 🔄 Animations & transitions: `fade`, `animate:flip`
 - 🧩 Context API: `setContext`, `getContext`
 - 🔁 Component communication patterns
 - 🚫 No SvelteKit, only Svelte
