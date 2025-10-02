@@ -2,9 +2,9 @@ name: Deploy poll App
 
 on:
     push:
-        branches: [master]
+        branches: [main]
     pull_request:
-        branches: [master]
+        branches: [main]
     workflow_dispatch: # Allows manual triggering
 
 permissions:
@@ -19,7 +19,7 @@ concurrency:
 jobs:
     build-and-deploy:
         runs-on: ubuntu-latest
-        # Only deploy on master branch pushes, but build for all events
+        # Only deploy on main branch pushes, but build for all events
         environment:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
@@ -39,18 +39,18 @@ jobs:
             - name: Build
               run: npm run build
 
-            # Only run deployment steps for master branch pushes
+            # Only run deployment steps for main branch pushes
             - name: Setup Pages
-              if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+              if: github.ref == 'refs/heads/main' && github.event_name == 'push'
               uses: actions/configure-pages@v4
 
             - name: Upload artifact
-              if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+              if: github.ref == 'refs/heads/main' && github.event_name == 'push'
               uses: actions/upload-pages-artifact@v3
               with:
                   path: "./dist"
 
             - name: Deploy to GitHub Pages
-              if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+              if: github.ref == 'refs/heads/main' && github.event_name == 'push'
               id: deployment
               uses: actions/deploy-pages@v4
