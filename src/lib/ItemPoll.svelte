@@ -40,7 +40,6 @@
       votingDisabled = true;
       return;
     }
-    console.log('Voted for option(s):', selectedOption);
     pollActions.vote(poll.id, selectedOption);
     pollActions.pushToEnd(poll.id);
     hasVoted = true;

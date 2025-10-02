@@ -82,8 +82,12 @@ export const pollActions = {
           return {
             ...poll,
             options: poll.options.map(option => {
-              if (option.id ===  optionId || optionId.includes(option.id)) {
-                console.log('Voting for option:', option.votes);
+              if (optionId && Array.isArray(optionId)) {
+                for (let opid of optionId) {
+                  if (option.id ===  opid){ 
+                    return { ...option, votes: option.votes + 1 };
+                }}
+              } else if (option.id ===  optionId) {
                 return { ...option, votes: option.votes + 1 };
               }
               return option;
@@ -101,7 +105,12 @@ export const pollActions = {
           return {
             ...poll,
             options: poll.options.map(option => {
-              if ((option.id === optionId || optionId.includes(option.id)) && option.votes > 0) {
+            if (optionId && Array.isArray(optionId)) {
+              for (let opid of optionId) {
+                if (option.id ===  opid){ 
+                  return { ...option, votes: option.votes + 1 };
+              }}
+            } else if (option.id ===  optionId) {               
                 return { ...option, votes: option.votes - 1 };
               }
               return option;
