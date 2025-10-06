@@ -2,7 +2,8 @@
 import { derived, writable } from 'svelte/store';
 import { v4 as uuidv4 } from 'uuid';
 
-const pollStore = writable([{
+const pollStore = writable([
+  {
     id: uuidv4(),
     question: 'What is your favorite programming language?',
     type: 'single',
@@ -49,45 +50,46 @@ const pollStore = writable([{
 ]);
 
 export const polls = derived(pollStore, ($polls) => {
-  return $polls.map(poll => ({
+  return $polls.map((poll) => ({
     ...poll,
     totalVotes: poll.options.reduce((sum, option) => sum + option.votes, 0)
-  }))
-})
+  }));
+});
 
 export const pollActions = {
   addPoll: (question, options, pollType) => {
-    pollStore.update(polls => {
+    pollStore.update((polls) => {
       const newId = uuidv4();
       const newPoll = {
         id: newId,
         question,
         type: pollType,
         options: options.map((text, index) => ({
-          id: index + 1, 
+          id: index + 1,
           text,
           votes: 0
         }))
-        };
+      };
       return [...polls, newPoll];
-    }
-  )},
+    });
+  },
   removePoll: (id) => {
-    pollStore.update(polls => polls.filter(poll => poll.id !== id));
+    pollStore.update((polls) => polls.filter((poll) => poll.id !== id));
   },
   vote: (pollId, optionId) => {
-    pollStore.update(polls => {
-      return polls.map(poll => {
+    pollStore.update((polls) => {
+      return polls.map((poll) => {
         if (poll.id === pollId) {
           return {
             ...poll,
-            options: poll.options.map(option => {
+            options: poll.options.map((option) => {
               if (optionId && Array.isArray(optionId)) {
                 for (let opid of optionId) {
-                  if (option.id ===  opid){ 
+                  if (option.id === opid) {
                     return { ...option, votes: option.votes + 1 };
-                }}
-              } else if (option.id ===  optionId) {
+                  }
+                }
+              } else if (option.id === optionId) {
                 return { ...option, votes: option.votes + 1 };
               }
               return option;
@@ -99,18 +101,19 @@ export const pollActions = {
     });
   },
   unvote: (pollId, optionId) => {
-    pollStore.update(polls => {
-      return polls.map(poll => {
+    pollStore.update((polls) => {
+      return polls.map((poll) => {
         if (poll.id === pollId) {
           return {
             ...poll,
-            options: poll.options.map(option => {
-            if (optionId && Array.isArray(optionId)) {
-              for (let opid of optionId) {
-                if (option.id ===  opid){ 
-                  return { ...option, votes: option.votes + 1 };
-              }}
-            } else if (option.id ===  optionId) {               
+            options: poll.options.map((option) => {
+              if (optionId && Array.isArray(optionId)) {
+                for (let opid of optionId) {
+                  if (option.id === opid) {
+                    return { ...option, votes: option.votes + 1 };
+                  }
+                }
+              } else if (option.id === optionId) {
                 return { ...option, votes: option.votes - 1 };
               }
               return option;
@@ -123,11 +126,11 @@ export const pollActions = {
   },
   getPollById: (pollId) => {
     return derived(polls, ($polls) => {
-      return $polls.find(poll => poll.id === pollId) || null;
+      return $polls.find((poll) => poll.id === pollId) || null;
     });
   },
-  orderByVotes: (pollId) => {
-    pollStore.update(polls => {
+  orderByVotes: () => {
+    pollStore.update((polls) => {
       return [...polls].sort((a, b) => {
         const totalVotesA = a.options.reduce((sum, option) => sum + option.votes, 0);
         const totalVotesB = b.options.reduce((sum, option) => sum + option.votes, 0);
@@ -136,8 +139,8 @@ export const pollActions = {
     });
   },
   pushToEnd: (pollId) => {
-    pollStore.update(polls => {
-      const index = polls.findIndex(poll => poll.id === pollId);
+    pollStore.update((polls) => {
+      const index = polls.findIndex((poll) => poll.id === pollId);
       if (index === -1) return polls;
       const [poll] = polls.splice(index, 1);
       return [...polls, poll];
@@ -145,13 +148,13 @@ export const pollActions = {
   },
   progressOptions: (pollId) => {
     return derived(polls, ($polls) => {
-      const poll = $polls.find(p => p.id === pollId);
+      const poll = $polls.find((p) => p.id === pollId);
       if (!poll) return [];
       const totalVotes = poll.options.reduce((sum, option) => sum + option.votes, 0);
-      return poll.options.map(option => ({
+      return poll.options.map((option) => ({
         ...option,
         progress: totalVotes > 0 ? option.votes / totalVotes : 0
       }));
     });
   }
-}
+};

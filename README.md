@@ -2,7 +2,6 @@
 
 A simple polling app front-end built with **Svelte 5** (no SvelteKit), **Vite**, and **Tailwind CSS v4** (with dark mode support). This project is designed as a learning journey through Svelte 5's core features: stores, lifecycle hooks, transitions, context API, and more.
 
-
 ## Features
 
 - ⚡️ Built with [Svelte 5](https://svelte.dev/blog/svelte-5-beta) and [Vite](https://vitejs.dev/)
@@ -42,31 +41,33 @@ A simple polling app front-end built with **Svelte 5** (no SvelteKit), **Vite**,
 ### Day 5: Mini Project
 
 - Build a polling app:
-    - Users vote for options
-    - Live results update
-    - Light/dark theme toggle
-    - All features above integrated
-
+  - Users vote for options
+  - Live results update
+  - Light/dark theme toggle
+  - All features above integrated
 
 ## Getting Started
 
 1. **Clone the repo:**
-     ```bash
-     git clone https://github.com/your-username/svelte-poll-app.git
-     cd svelte-poll-app
-     ```
+
+   ```bash
+   git clone https://github.com/your-username/svelte-poll-app.git
+   cd svelte-poll-app
+   ```
 
 2. **Install dependencies:**
-     ```bash
-     npm install
-     ```
+
+   ```bash
+   npm install
+   ```
 
 3. **Run the dev server:**
-     ```bash
-     npm run dev
-     ```
+
+   ```bash
+   npm run dev
+   ```
 
 4. **Build for production:**
-     ```bash
-     npm run build
-     ```
+   ```bash
+   npm run build
+   ```

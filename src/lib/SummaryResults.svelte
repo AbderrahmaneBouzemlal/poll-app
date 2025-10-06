@@ -1,5 +1,5 @@
 <script>
-  import { pollActions, polls } from '../data/polls.svelte.js';
+  import { pollActions } from '../data/polls.svelte.js';
   import { fade } from 'svelte/transition';
   import { getContext } from 'svelte';
 
@@ -8,7 +8,7 @@
     closePoll,
     selectedOption = $bindable([]),
     togglehasVoted,
-    votingDisabled = $bindable(false),
+    votingDisabled = $bindable(false)
   } = $props();
 
   let tweens = getContext('tweens');
@@ -17,41 +17,41 @@
 
 <div in:fade={{ duration: 300 }}>
   <h2
-    class="mt-6 mb-2 text-lg font-semibold text-gray-800 dark:text-gray-200 border-b border-gray-200 dark:border-gray-600 pb-1"
+    class="mt-6 mb-2 border-b border-gray-200 pb-1 text-lg font-semibold text-gray-800 dark:border-gray-600 dark:text-gray-200"
   >
     Poll Summary
   </h2>
   <ul>
-    {#each $progressOptions as option, index}
+    {#each $progressOptions as option, index (option.id)}
       <li
-        class="flex flex-col py-2 px-3 mb-2 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-sm"
+        class="mb-2 flex flex-col rounded-lg bg-gray-50 px-3 py-2 shadow-sm dark:bg-gray-700"
         in:fade={{ duration: 200, delay: index * 100 }}
       >
-        <div class="flex justify-between items-center mb-1">
+        <div class="mb-1 flex items-center justify-between">
           <span class="font-medium text-gray-700 dark:text-gray-300">{option.text}</span>
           <span
-            class="bg-primary-100 dark:bg-primary-200 text-primary-700 dark:text-primary-800 font-semibold px-3 py-1 rounded-full text-sm"
+            class="bg-primary-100 dark:bg-primary-200 text-primary-700 dark:text-primary-800 rounded-full px-3 py-1 text-sm font-semibold"
           >
             {option.votes} votes
           </span>
         </div>
-        <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2.5 overflow-hidden">
+        <div class="h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-600">
           <progress
-            class="bg-primary-600 dark:bg-primary-500 h-2.5 rounded-full transition-all w-full duration-600 ease-out"
+            class="bg-primary-600 dark:bg-primary-500 h-2.5 w-full rounded-full transition-all duration-600 ease-out"
             value={tweens[option.id]?.current}
           ></progress>
         </div>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
           {Math.round((tweens[option.id]?.current || 0) * 100)}%
         </p>
       </li>
     {/each}
   </ul>
-  <div class="flex gap-2 mt-4">
+  <div class="mt-4 flex gap-2">
     <button
       onclick={closePoll}
-      class="w-full text-gray-600 dark:bg-gray-500 dark:hover:bg-gray-600 dark:text-white font-semibold py-2 px-4
-                rounded-lg shadow transition-colors duration-200"
+      class="w-full rounded-lg px-4 py-2 font-semibold text-gray-600 shadow transition-colors
+                duration-200 dark:bg-gray-500 dark:text-white dark:hover:bg-gray-600"
     >
       Close
     </button>
@@ -64,8 +64,8 @@
         votingDisabled = false;
         selectedOption = null;
       }}
-      class="w-full bg-secondary-600 hover:cursor-pointer bg-slate-700 hover:bg-secondary-700 dark:bg-secondary-500
-                dark:hover:bg-secondary-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-200"
+      class="bg-secondary-600 hover:bg-secondary-700 dark:bg-secondary-500 dark:hover:bg-secondary-600 w-full rounded-lg
+                bg-slate-700 px-4 py-2 font-semibold text-white shadow transition-colors duration-200 hover:cursor-pointer"
     >
       Revote
     </button>

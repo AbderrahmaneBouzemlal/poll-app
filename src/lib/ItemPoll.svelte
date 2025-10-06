@@ -31,9 +31,6 @@
   function togglehasVoted() {
     hasVoted = !hasVoted;
   }
-  function disableVoting() {
-    votingDisabled = !disableVoting;
-  }
   function handleSubmit(event) {
     event.preventDefault();
     if (selectedOption === null) {
@@ -50,22 +47,22 @@
 <main
   use:handleClickOutside={closePoll}
   in:positionAwareScale={{ duration: 500, startScale: 0.5, clickPosition }}
-  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-2 min-w-[50%] max-w-md max-h-[80vh] overflow-y-auto p-4 border rounded-lg shadow-lg bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300"
+  class="absolute top-1/2 left-1/2 mt-2 max-h-[80vh] max-w-md min-w-[50%] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-lg border border-gray-200 bg-white p-4 shadow-lg transition-colors duration-300 dark:border-gray-700 dark:bg-gray-800"
 >
   {#if !hasVoted}
     <form action="vote" onsubmit={handleSubmit} class="mb-4">
-      <label for="options" class="font-bold text-xl text-gray-800 dark:text-gray-200"
+      <label for="options" class="text-xl font-bold text-gray-800 dark:text-gray-200"
         >{poll.question}</label
       >
       {#if selectedOption === null && votingDisabled}
-        <p class="text-red-600 dark:text-red-400 text-sm mt-2 animate-pulse" role="alert">
+        <p class="mt-2 animate-pulse text-sm text-red-600 dark:text-red-400" role="alert">
           Please select an option before voting.
         </p>
       {/if}
       <div
-        class="flex flex-col mt-2 w-full border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2"
+        class="mt-2 flex w-full flex-col rounded-lg border border-gray-200 px-3 py-2 dark:border-gray-600"
       >
-        {#each poll.options as option, index}
+        {#each poll.options as option, index (option.id)}
           <div class="flex items-center py-1">
             {#if poll.type === 'multiple'}
               <input
@@ -74,7 +71,7 @@
                 id={`option-${index}`}
                 value={option.id}
                 bind:group={selectedOption}
-                class="mr-2 h-4 w-4 text-primary-600 dark:text-primary-500 focus:ring-primary-500 dark:focus:ring-primary-400"
+                class="text-primary-600 dark:text-primary-500 focus:ring-primary-500 dark:focus:ring-primary-400 mr-2 h-4 w-4"
                 aria-labelledby={`label-${index}`}
               />
             {:else}
@@ -84,14 +81,14 @@
                 id={`option-${index}`}
                 value={option.id}
                 bind:group={selectedOption}
-                class="mr-2 h-4 w-4 text-primary-600 dark:text-primary-500 focus:ring-primary-500 dark:focus:ring-primary-400"
+                class="text-primary-600 dark:text-primary-500 focus:ring-primary-500 dark:focus:ring-primary-400 mr-2 h-4 w-4"
                 aria-labelledby={`label-${index}`}
               />
             {/if}
             <label
               id={`label-${index}`}
               for={`option-${index}`}
-              class="py-2 px-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer w-full transition-colors duration-200"
+              class="w-full cursor-pointer rounded px-3 py-2 text-gray-700 transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
             >
               {option.text}
             </label>
@@ -100,7 +97,7 @@
       </div>
       <button
         type="submit"
-        class="mt-4 w-full bg-slate-600 hover:cursor-pointer dark:bg-slate-500 dark:hover:bg-slate-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-200"
+        class="mt-4 w-full rounded-lg bg-slate-600 px-4 py-2 font-semibold text-white shadow transition-colors duration-200 hover:cursor-pointer dark:bg-slate-500 dark:hover:bg-slate-600"
       >
         Vote Now
       </button>
@@ -109,7 +106,7 @@
           e.preventDefault();
           closePoll();
         }}
-        class="mt-2 w-full text-gray-600 dark:bg-gray-500 dark:hover:bg-gray-600 dark:text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-200"
+        class="mt-2 w-full rounded-lg px-4 py-2 font-semibold text-gray-600 shadow transition-colors duration-200 dark:bg-gray-500 dark:text-white dark:hover:bg-gray-600"
       >
         Close
       </button>

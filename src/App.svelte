@@ -19,13 +19,13 @@
   const { send, receive } = crossfade({
     duration: 400,
     easing: cubicOut,
-    fallback(node) {
+    fallback() {
       return {
         duration: 400,
         easing: cubicOut,
-        css: (t) => `opacity: ${t}`,
+        css: (t) => `opacity: ${t}`
       };
-    },
+    }
   });
 
   onMount(() => {
@@ -65,7 +65,7 @@
   function showAddPoll(event) {
     clickPosition = {
       x: event.clientX || window.innerWidth / 2,
-      y: event.clientY || window.innerHeight / 2,
+      y: event.clientY || window.innerHeight / 2
     };
     addingPoll = true;
   }
@@ -76,13 +76,13 @@
   }
 </script>
 
-<header class="bg-white dark:bg-gray-800 shadow-md border-b border-gray-200 dark:border-gray-700">
+<header class="border-b border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800">
   <nav class="h-16" aria-label="Main navigation">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
         <div class="flex items-center gap-2">
           <a href="#main" class="text-2xl font-bold text-gray-800 dark:text-gray-200">Poll App</a>
-          <FontAwesomeIcon class="text-gray-600 dark:text-gray-300 text-2xl" icon={faPoll} />
+          <FontAwesomeIcon class="text-2xl text-gray-600 dark:text-gray-300" icon={faPoll} />
         </div>
         <div class="flex items-center space-x-4">
           <ToggleButton {currentTheme} {toggleTheme} />
@@ -92,16 +92,16 @@
   </nav>
 </header>
 <main
-  class="relative min-h-[calc(100vh-4rem)] w-full bg-gradient-to-br from-gray-50 to-gray-200 dark:from-gray-900 dark:to-gray-800 p-6 sm:p-8 transition-colors duration-300"
+  class="relative min-h-[calc(100vh-4rem)] w-full bg-gradient-to-br from-gray-50 to-gray-200 p-6 transition-colors duration-300 sm:p-8 dark:from-gray-900 dark:to-gray-800"
   id="main"
   aria-label="Main app"
 >
-  <h1 class="text-3xl font-extrabold text-gray-800 dark:text-gray-200 text-center mb-8">Polls</h1>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+  <h1 class="mb-8 text-center text-3xl font-extrabold text-gray-800 dark:text-gray-200">Polls</h1>
+  <div class="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
     {#each $polls as poll (poll.id)}
       <div
-        class="bg-white w-full dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 flex flex-col justify-between items-center
-              shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm mx-auto"
+        class="mx-auto flex w-full max-w-sm flex-col items-center justify-between rounded-lg border border-gray-200 bg-white p-6
+              shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
         role="article"
         aria-labelledby={`poll-${poll.id}`}
         animate:flip={{ duration: 400, easing: cubicOut }}
@@ -110,24 +110,24 @@
       >
         <h1
           id={`poll-${poll.id}`}
-          class="font-bold text-xl text-gray-800 dark:text-gray-200 text-center mb-4"
+          class="mb-4 text-center text-xl font-bold text-gray-800 dark:text-gray-200"
         >
           {poll.question}
         </h1>
         <button
-          class="bg-primary-600 hover:cursor-pointer text-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600
-                dark:text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-200 w-full flex items-center justify-center gap-2"
+          class="bg-primary-600 text-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 flex
+                w-full items-center justify-center gap-2 rounded-lg px-4 py-2 font-semibold shadow transition-colors duration-200 hover:cursor-pointer dark:text-white"
           onclick={(e) => {
             e.stopPropagation();
             showPoll(poll, e);
           }}
           aria-label={`Vote on ${poll.question}`}
         >
-          <FontAwesomeIcon icon={faVoteYea} class="dark:text-white text-primary-600 text-lg" />
+          <FontAwesomeIcon icon={faVoteYea} class="text-primary-600 text-lg dark:text-white" />
           Vote
         </button>
         <p
-          class="mt-3 text-sm text-gray-600 dark:text-gray-400 font-medium"
+          class="mt-3 text-sm font-medium text-gray-600 dark:text-gray-400"
           aria-label={`Total votes: ${poll.totalVotes}`}
         >
           {poll.totalVotes}
@@ -136,17 +136,17 @@
       </div>
     {/each}
     <div
-      class="bg-white dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 flex flex-col items-center
-             w-full justify-center shadow-md hover:shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 max-w-sm mx-auto"
+      class="mx-auto flex w-full max-w-sm flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300
+             bg-white p-6 shadow-md transition-all duration-300 hover:bg-gray-100 hover:shadow-lg dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <button
         onclick={showAddPoll}
-        class="group flex items-center justify-center gap-2 w-full py-3 px-4 rounded-lg bg-primary-100 hover:bg-primary-200
-              dark:bg-primary-200 dark:hover:bg-primary-300 text-primary-700 dark:text-white font-semibold transition-all duration-300"
+        class="group bg-primary-100 hover:bg-primary-200 dark:bg-primary-200 dark:hover:bg-primary-300 text-primary-700 flex w-full items-center justify-center gap-2
+              rounded-lg px-4 py-3 font-semibold transition-all duration-300 dark:text-white"
         aria-label="Add a new poll"
       >
         <FontAwesomeIcon
-          class="text-primary-600 dark:text-white text-2xl group-hover:scale-110 group-hover:rotate-90 transition-transform duration-300"
+          class="text-primary-600 text-2xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-90 dark:text-white"
           icon={faPlus}
         />
         <span>Add New Poll</span>
@@ -158,7 +158,7 @@
   {/if}
   {#if $polls.length === 0}
     <div
-      class="text-center text-gray-500 dark:text-gray-400 mt-10"
+      class="mt-10 text-center text-gray-500 dark:text-gray-400"
       in:receive={{ key: 'no-polls' }}
       out:send={{ key: 'no-polls' }}
     >
@@ -166,6 +166,6 @@
     </div>
   {/if}
   {#if addingPoll}
-    <FormPoll {addingPoll} {clickPosition} {closePoll} />
+    <FormPoll bind:addingPoll={addingPoll} {clickPosition} {closePoll} />
   {/if}
 </main>
